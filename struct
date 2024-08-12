@@ -1,0 +1,35 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.26;
+
+contract Structs {
+    // Define the Struct
+    struct Car {
+        string model;
+        uint year;
+        address owner;
+    }
+
+    Car public car;
+    Car[] public cars; // an array of struct
+    mapping (address => Car[]) public carsByOwner;
+
+    function examples() external {
+        Car memory toyota = Car("Toyota", 2000, msg.sender);
+        Car memory lambo = Car({year: 2000, model: "lambo", owner: msg.sender});
+        Car memory tesla;
+        tesla.model = 'Tesla';
+        tesla.year = 2002;
+        tesla.owner = msg.sender;
+
+        cars.push(toyota);
+        cars.push(lambo);
+        cars.push(tesla);
+
+        cars.push(Car("Audi", 2005, msg.sender));
+
+        Car storage _car = cars[0];
+        _car.year = 2015;
+        delete _car.owner;
+        delete cars[1];
+    }
+}
